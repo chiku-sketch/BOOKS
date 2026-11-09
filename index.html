@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArionZ | The Literary Universe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-deep: #050505;
+            --bg-card: #0c0c0c;
+            --bg-glass: rgba(18, 18, 18, 0.7);
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --gold-dark: #997a15;
+            --text-main: #e2e2e2;
+            --text-muted: #9a9a9a;
+            --border-gold: rgba(212, 175, 55, 0.2);
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient Glow Background Effects */
+        .ambient-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, rgba(5, 5, 5, 0) 70%);
+            top: -200px;
+            left: -200px;
+            z-index: -1;
+            pointer-events: none;
+            animation: floatGlow 10s ease-in-out infinite alternate;
+        }
+
+        .ambient-glow-2 {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.03) 0%, rgba(5, 5, 5, 0) 70%);
+            bottom: -150px;
+            right: -150px;
+            z-index: -1;
+            pointer-events: none;
+            animation: floatGlow 12s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 50px) scale(1.1); }
+        }
+
+        /* Typography */
+        h1, h2, h3, .serif-font {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 1px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 8%;
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-gold);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-decoration: none;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 1.1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--transition);
+            letter-spacing: 1px;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+        }
+
+        .menu-toggle {
+            display: none;
+            color: var(--gold);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        header.hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            background: linear-gradient(180deg, rgba(5,5,5,0.3) 0%, rgba(5,5,5,0.95) 100%);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid var(--border-gold);
+            border-radius: 30px;
+            color: var(--gold);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            animation: fadeInDown 1s ease forwards;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 900;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .hero h1 span {
+            color: var(--gold);
+            text-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .hero p {
+            max-width: 650px;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 4px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            letter-spacing: 1.5px;
+            transition: var(--transition);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: var(--bg-deep);
+            border: 1px solid var(--gold);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-light);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--gold);
+            border: 1px solid var(--border-gold);
+        }
+
+        .btn-outline:hover {
+            background: rgba(212, 175, 55, 0.08);
+            border-color: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        /* Container Standard */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 8%;
+        }
+
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-title span {
+            color: var(--gold);
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* Books Showcase */
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+
+        .book-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-gold);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .book-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 55, 0.15);
+        }
+
+        .book-banner {
+            height: 240px;
+            background: linear-gradient(135deg, #141414 0%, #1f1a0a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-bottom: 1px solid var(--border-gold);
+            overflow: hidden;
+        }
+
+        .book-banner::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+        }
+
+        .book-banner i {
+            font-size: 4rem;
+            color: var(--gold);
+            opacity: 0.85;
+            transition: var(--transition);
+        }
+
+        .book-card:hover .book-banner i {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .book-content {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .book-tag {
+            font-size: 0.75rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .book-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+
+        .book-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+
+        .book-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* Author Section */
+        .author-section {
+            background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-card) 100%);
+            border-top: 1px solid var(--border-gold);
+            border-bottom: 1px solid var(--border-gold);
+        }
+
+        .author-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .author-img-box {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #111, #221c0b);
+            border: 1px solid var(--border-gold);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+        }
+
+        .author-img-box i {
+            font-size: 6rem;
+            color: var(--gold);
+            opacity: 0.8;
+        }
+
+        .author-info h2 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+
+        .author-info h2 span {
+            color: var(--gold);
+        }
+
+        .author-info p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .author-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-gold);
+        }
+
+        .stat-item h3 {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 5px;
+        }
+
+        .stat-item p {
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* Reader Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-container {
+            width: 90%;
+            max-width: 900px;
+            height: 85vh;
+            background: var(--bg-card);
+            border: 1px solid var(--gold);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.9), 0 0 30px rgba(212, 175, 55, 0.2);
+            transform: scale(0.95);
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border-gold);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #080808;
+        }
+
+        .modal-header h3 {
+            color: var(--gold);
+            font-size: 1.2rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--gold);
+        }
+
+        .modal-body {
+            padding: 40px;
+            overflow-y: auto;
+            flex-grow: 1;
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: #dcdcdc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .modal-body h4 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal-body p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        /* Footer */
+        footer {
+            background: #030303;
+            border-top: 1px solid var(--border-gold);
+            padding: 40px 8%;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer span {
+            color: var(--gold);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .author-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .author-img-box {
+                height: 300px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .menu-toggle {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow"></div>
+    <div class="ambient-glow-2"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="logo"><i class="fas fa-feather-alt"></i> ARIONZ</a>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#books">Books</a></li>
+            <li><a href="#author">Author</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="home">
+        <div class="hero-badge">Literary Masterworks</div>
+        <h1>Explore the Universe of <span>ArionZ</span></h1>
+        <p>Step into profound philosophical realms, deep synchronicity of time, and emotional odysseys crafted through the mind of a hyperthinker.</p>
+        <div class="hero-btns">
+            <a href="#books" class="btn btn-primary"><i class="fas fa-book-open"></i> Explore Books</a>
+            <a href="#author" class="btn btn-outline"><i class="fas fa-user-astronaut"></i> About Author</a>
+        </div>
+    </header>
+
+    <!-- Books Showcase -->
+    <section class="container" id="books">
+        <div class="section-title">
+            <span>Published Masterpieces</span>
+            <h2>The Literary Collection</h2>
+        </div>
+
+        <div class="books-grid">
+            <!-- Book 1: 11:11 -->
+            <div class="book-card">
+                <div class="book-banner">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="book-content">
+                    <div class="book-tag">Philosophy & Time</div>
+                    <h3>11:11</h3>
+                    <p>A deep exploration of synchronicity, first wants, childhood memories, karma, kindness, and the 4-tier pillars of trying again with new experience.</p>
+                    <div class="book-actions">
+                        <button class="btn btn-primary" onclick="openReader('1111')"><i class="fas fa-book-reader"></i> Read Now</button>
+                        <a href="11_11_book.pdf" download class="btn btn-outline" title="Download PDF"><i class="fas fa-download"></i> PDF</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 2: A Train -->
+            <div class="book-card">
+                <div class="book-banner">
+                    <i class="fas fa-train"></i>
+                </div>
+                <div class="book-content">
+                    <div class="book-tag">Reflection & Journey</div>
+                    <h3>A Train</h3>
+                    <p>A philosophical journey through the meaning of moving on, memory, loss, acceptance, hope, and the passengers who travel with us along life's tracks.</p>
+                    <div class="book-actions">
+                        <button class="btn btn-primary" onclick="openReader('train')"><i class="fas fa-book-reader"></i> Read Now</button>
+                        <a href="A_Train.pdf" download class="btn btn-outline" title="Download PDF"><i class="fas fa-download"></i> PDF</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Author Section -->
+    <section class="author-section" id="author">
+        <div class="container">
+            <div class="author-grid">
+                <div class="author-img-box">
+                    <i class="fas fa-user-secret"></i>
+                </div>
+                <div class="author-info">
+                    <span>The Creator</span>
+                    <h2>Jigarkumar Darji <span>(ArionZ)</span></h2>
+                    <p>A 16-year-old self-taught developer, hyperthinker, and philosophical writer from Deesa, Gujarat. With an immersive reading background of over 681 books, ArionZ weaves profound human emotions, multiverse concepts, and existential insights into timeless literary art.</p>
+                    <p>Operating beyond traditional boundaries, every literary work is crafted to challenge ordinary perspectives and awaken the soul.</p>
+                    
+                    <div class="author-stats">
+                        <div class="stat-item">
+                            <h3>681+</h3>
+                            <p>Books Read</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>02</h3>
+                            <p>Published Books</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>500+</h3>
+                            <p>Years of Wisdom</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <p>&copy; 2026 ArionZ Literary Works. Designed with signature <span>Gold & Black</span> aesthetics.</p>
+    </footer>
+
+    <!-- Reader Modal -->
+    <div class="modal-overlay" id="readerModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modalBookTitle">Book Reader</h3>
+                <button class="close-modal" onclick="closeReader()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBookContent">
+                <!-- Dynamic Content injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        const bookContents = {
+            '1111': {
+                title: "11:11 — The Synchronicity of Choices & Time",
+                content: `
+                    <h4>Chapter 1: The First Want (11:11)</h4>
+                    <p>11:11... Why this exact number? Why not 12:12? Why not 07:07? There is something about 11:11 that hits differently. It isn't just a random sequence of numbers glowing on a screen in the dark. It feels like a pause button in the middle of a chaotic world—a strange glitch in time where the universe stops for a second just to look you in the eye.</p>
+                    <p>When we see something for the very first time, we are naturally drawn to it. Think back to your childhood toys. Our life is quite similar; someone is taking away what we love, and giving us kindness. Every single thing depends on our karma, but life gives us what is good for us rather than what we merely like.</p>
+                    
+                    <h4>Chapter 2: Intersecting vs. Parallel Lines</h4>
+                    <p>Consider the difference between intersecting lines and parallel lines. Intersecting lines cross each other at one single point and never meet again. Parallel lines walk together through life, never touching yet never leaving each other's side. Our struggle is getting attached to a single moment while ignoring those walking alongside us for a long time.</p>
+
+                    <h4>Chapter 3: The Four Pillars of 11:11</h4>
+                    <p>Look at the numbers themselves: 11:11. Four ones standing in a row. Four times try, but with the fire of the first time. You try the same thing four times—not with the blindness of a beginner, but with the wisdom of someone who has lived through the fall. Your life is entirely based on your decisions. And that is what 11:11 truly is.</p>
+
+                    <h4>Chapter 4: The Mind of a Hyperthinker</h4>
+                    <p>People might hear someone say, "I have over 500 years of experience," and laugh. But when your reading habit and thoughts push past ordinary overthinking, a hyperthinker is born. By immersing yourself in hundreds of books, you absorb centuries of human wisdom without having to break your heart in every single way.</p>
+
+                    <h4>After 11:11</h4>
+                    <p>Tamare je joie chhe, e tamne nathi malyu. Aa vaat no matlab hamesha aa nathi ke tame haar gaya... Safar haji baki chhe. The train keeps moving.</p>
+                `
+            },
+            'train': {
+                title: "A Train — A Reflection on People, Memories, and Change",
+                content: `
+                    <h4>Chapter 1: What Does It Really Mean to Move On?</h4>
+                    <p>"Move on." We hear these two words everywhere. But what does that actually mean? Does it mean forgetting the person? I don't think so. Think of life as a train. We are all passengers travelling toward our own destinations. Some enter early, some enter later. And when their station arrives, they get off. The train keeps moving.</p>
+                    
+                    <h4>Chapter 2: Why Do We Hold On?</h4>
+                    <p>If moving on means continuing our journey, then why do we keep looking back? A song, a place, a name—and suddenly a memory comes back. A memory can be a source of happiness and comfort. The problem begins when we refuse to close the old chapter because we believe nothing in the future can ever be as good.</p>
+
+                    <h4>Chapter 3: The Past Cannot Be Changed</h4>
+                    <p>There is one thing about the past that none of us can change: It has already happened. The goal isn't to hold it tightly, nor erase it completely. The goal is to transform it into understanding, wisdom, and gratitude.</p>
+
+                    <h4>Chapter 4: Acceptance ≠ Approval</h4>
+                    <p>You don't have to approve of your past. You don't have to celebrate everything that happened. You simply have to stop fighting the fact that it is already part of your story. You cannot edit yesterday, but you can make tomorrow different.</p>
+
+                    <h4>Chapter 5: There Was Never a Final Move</h4>
+                    <p>Maybe the biggest misunderstanding about moving on is the belief that one day it will finally be complete. Life isn't a straight road where chapters disappear forever. It is like a train. The person may leave, the station may disappear, but the journey continues. There was only the next station.</p>
+                `
+            }
+        };
+
+        function openReader(bookKey) {
+            const modal = document.getElementById('readerModal');
+            const titleEl = document.getElementById('modalBookTitle');
+            const contentEl = document.getElementById('modalBookContent');
+            
+            if(bookContents[bookKey]) {
+                titleEl.textContent = bookContents[bookKey].title;
+                contentEl.innerHTML = bookContents[bookKey].content;
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeReader() {
+            const modal = document.getElementById('readerModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('readerModal');
+            if (event.target == modal) {
+                closeReader();
+            }
+        }
+    </script>
+</body>
+</html>
